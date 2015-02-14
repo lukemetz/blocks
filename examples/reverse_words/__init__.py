@@ -89,6 +89,10 @@ class Transition(GatedRecurrent):
         return super(Transition, self).get_dim(name)
 
 
+def lower(s):
+    return s.lower()
+
+
 def main(mode, save_path, num_batches, from_dump):
     if mode == "train":
         # Experiment configuration
@@ -108,7 +112,7 @@ def main(mode, save_path, num_batches, from_dump):
                             predicate=lambda data: len(data[0]) <= 100,
                             data_stream=OneBillionWord(
                                 "training", [99], char2code,
-                                level="character", preprocess=str.lower)
+                                level="character", preprocess=lower)
                             .get_default_stream())))))
 
         # Build the model
