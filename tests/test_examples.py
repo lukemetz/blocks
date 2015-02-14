@@ -1,7 +1,7 @@
 import logging
 import tempfile
 
-import dill
+from six.moves import cPickle
 
 import blocks
 from blocks.extensions.saveload import SAVED_TO
@@ -31,7 +31,7 @@ def test_mnist():
     filename = f.name
     mnist_test(filename, 1)
     with open(filename, "rb") as source:
-        main_loop = dill.load(source)
+        main_loop = cPickle.load(source)
     main_loop.find_extension("FinishAfter").set_conditions(after_n_epochs=2)
     main_loop.run()
     assert main_loop.log.status.epochs_done == 2
